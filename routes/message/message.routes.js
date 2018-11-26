@@ -25,12 +25,12 @@ class MessageRouterClass {
         
         // Post a message
         messageRouter.post('/', (req, res) => {
-            if( typeof req.body === 'undefined' || req.body === null ) sendBodyError( res, 'No body data provided' );
-
             isConnected(req.body.token).then(decodedToken => {
                 // Check for body data
+                if( typeof req.body === 'undefined' || req.body === null ) sendBodyError( res, 'No body data provided' );
 
                 // Check for mandatories
+                // We don't check for the token property, it is only verified in the isConnected function
                 const { miss, extra, ok } = checkFields(['content'], req.body);
                 if( !ok ){ sendFieldsError( res, 'Bad fields provided', miss, extra ) }
 

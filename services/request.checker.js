@@ -22,6 +22,7 @@ const checkFields = ( required, reqBody ) => {
 
     // Vérifier les champs en trop
     for( const prop in reqBody ){
+        // We don't want the token property to end up in the extra fields
         if( required.indexOf(prop) === -1 && prop != 'token') {
             console.log('EXTRA', prop)
             extra.push(prop)
