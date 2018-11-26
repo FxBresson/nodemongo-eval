@@ -18,9 +18,16 @@ const send = body => {
 
 const deleteOne = (body, reqParams) => {
     return new Promise( (resolve, reject) => {
-        MessageModel.findByIdAndDelete(reqParams.id, function (err) {
+        MessageModel.findById(reqParams.id, function (err, message) {
             if (err) return reject(err);
-            return resolve('deleted')
+            if (message.author != body.requester) {
+                return reject('Not author of message')
+            } else {
+                MessageModel.deleteOne(message, function(err) {
+                    if (err) return reject(err);
+                    return resolve('deleted')
+                })
+            }
         });
     })
 }

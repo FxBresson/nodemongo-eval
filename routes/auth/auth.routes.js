@@ -44,7 +44,7 @@ Routes definition
                 // Use controller function
                 login(req.body)
                 .then( apiRes =>  sendApiSuccessResponse(res, 'User logged', apiRes))
-                .catch( apiErr => sendApiErrorResponse(res, 'User not logged', apiErr));
+                .catch( apiErr => sendApiErrorResponse(res, 'User not found', apiErr));
             });
         };
 

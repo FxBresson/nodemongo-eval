@@ -1,4 +1,10 @@
 /*
+Imports & configs
+*/
+const jwt = require('jsonwebtoken');
+//
+
+/*
 Créer une fonction pour vérifier les données d'une requête
 */
 const checkFields = ( required, reqBody ) => {
@@ -16,7 +22,7 @@ const checkFields = ( required, reqBody ) => {
 
     // Vérifier les champs en trop
     for( const prop in reqBody ){
-        if( required.indexOf(prop) === -1 ) {
+        if( required.indexOf(prop) === -1 && prop != 'token') {
             console.log('EXTRA', prop)
             extra.push(prop)
         };
@@ -29,10 +35,20 @@ const checkFields = ( required, reqBody ) => {
     // Renvoyer le résultat
     return { ok, extra, miss };
 }
+
+const isConnected = (token) => {
+    return new Promise( (resolve, reject) => {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) reject(err)
+            console.log(decoded)
+            resolve(decoded)
+        })
+    })
+}
 //
 
 /*
 Exporter le module du service
 */
-module.exports = { checkFields };
+module.exports = { checkFields, isConnected };
 //
