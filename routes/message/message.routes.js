@@ -66,7 +66,7 @@ class MessageRouterClass {
                 if (!req.params || !req.params.id) { sendBodyError(res, 'No param provided') }
 
                 // Use controller function
-                deleteOne(req.body, req.params)
+                getOne(req.body, req.params)
                 .then( apiRes =>  sendApiSuccessResponse(res, 'Message retrieved', apiRes))
                 .catch( apiErr => sendApiErrorResponse(res, 'Message not retrieved', apiErr));
             })
@@ -77,7 +77,7 @@ class MessageRouterClass {
         messageRouter.get('/all', (req, res) => {
             isConnected(req.body.token).then(decodedToken => {
                 // Use controller function
-                deleteOne(req.body)
+                getAll(req.body)
                 .then( apiRes =>  sendApiSuccessResponse(res, 'Messages retrieved', apiRes))
                 .catch( apiErr => sendApiErrorResponse(res, 'Messages not retrieved', apiErr));
             })
